@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pre-Displacement Sequence — Pattern Analysis</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap');
+
+  :root {
+    --bg: #0c0c10;
+    --bg2: #12121a;
+    --bg3: #1a1a24;
+    --text: #b8b8c8;
+    --dim: #555568;
+    --accent: #6c8aff;
+    --accent2: #ff6c8a;
+    --green: #4ade80;
+    --amber: #f59e0b;
+    --line: rgba(108, 138, 255, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* Header — research paper energy */
+  .paper-header {
+    border: 1px solid var(--line);
+    padding: 30px;
+    margin-bottom: 40px;
+    background: var(--bg2);
+  }
+  .paper-header .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+  .paper-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e8e8f0;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .paper-header .author {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .paper-header .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-top: 15px;
+    line-height: 1.9;
+  }
+
+  .nav-crumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 30px;
+  }
+  .nav-crumb a { color: var(--accent); text-decoration: none; }
+  .nav-crumb a:hover { text-decoration: underline; }
+
+  /* Section headers */
+  h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 50px 0 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #d8d8e8;
+    margin: 30px 0 10px;
+  }
+
+  p { margin-bottom: 14px; }
+
+  /* The timeline */
+  .timeline {
+    position: relative;
+    padding-left: 60px;
+    margin: 30px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    opacity: 0.3;
+  }
+
+  .t-entry {
+    position: relative;
+    margin-bottom: 35px;
+    padding: 20px;
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  .t-entry::before {
+    content: '';
+    position: absolute;
+    left: -43px;
+    top: 24px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    z-index: 1;
+  }
+  .t-entry::after {
+    content: '';
+    position: absolute;
+    left: -31px;
+    top: 29px;
+    width: 25px;
+    height: 2px;
+    background: var(--line);
+  }
+  .t-entry.critical::before {
+    background: var(--accent2);
+    box-shadow: 0 0 8px rgba(255, 108, 138, 0.4);
+  }
+
+  .t-day {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .t-entry.critical .t-day { color: var(--accent2); }
+
+  .t-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #e0e0f0;
+    margin-bottom: 10px;
+  }
+
+  .t-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  /* Data points within timeline entries */
+  .datapoint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--bg3);
+    border-left: 2px solid var(--accent);
+    padding: 8px 12px;
+    margin: 12px 0;
+    color: var(--dim);
+  }
+  .datapoint .dp-label {
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .t-entry.critical .datapoint { border-left-color: var(--accent2); }
+  .t-entry.critical .datapoint .dp-label { color: var(--accent2); }
+
+  /* Correlation note */
+  .correlation {
+    background: rgba(108, 138, 255, 0.08);
+    border: 1px solid rgba(108, 138, 255, 0.2);
+    padding: 15px;
+    margin: 12px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--dim);
+  }
+  .correlation strong { color: var(--accent); font-style: normal; }
+
+  /* Author commentary */
+  .commentary {
+    border-left: 2px solid var(--dim);
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 13px;
+    color: var(--dim);
+    font-style: italic;
+  }
+  .commentary .sig {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 8px;
+    font-style: normal;
+  }
+
+  /* Confidence meter */
+  .confidence {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin: 8px 0;
+  }
+  .conf-bar {
+    height: 4px;
+    background: var(--bg3);
+    flex: 1;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .conf-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  /* Warning */
+  .warning-box {
+    background: rgba(255, 108, 138, 0.08);
+    border: 1px solid var(--accent2);
+    padding: 15px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .warning-box strong { color: var(--accent2); }
+
+  /* Quote */
+  blockquote {
+    border-left: 2px solid var(--dim);
+    padding: 8px 15px;
+    margin: 12px 0;
+    font-style: italic;
+    color: var(--dim);
+    font-size: 14px;
+  }
+  blockquote cite {
+    display: block;
+    font-size: 11px;
+    margin-top: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(85, 85, 104, 0.6);
+  }
+
+  /* Source list */
+  .sources {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 2;
+    margin: 15px 0;
+  }
+  .sources span { color: var(--accent); }
+
+  /* Footer */
+  .site-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    text-align: center;
+  }
+  .site-footer a { color: var(--accent); text-decoration: none; }
+
+  /* Link styling */
+  a { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .timeline { padding-left: 40px; }
+    .t-entry::before { left: -23px; }
+    .t-entry::after { left: -11px; width: 10px; }
+    .timeline::before { left: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="nav-crumb">
+  <a href="index.html">B.T.A. Archive</a> &raquo; <a href="preparation.html">Preparation Guide</a> &raquo; Sequence Analysis
+</div>
+
+<div class="paper-header">
+  <div class="label">Independent Research // Not Bureau Affiliated</div>
+  <h1>The Pre-Displacement Sequence</h1>
+  <p style="color:var(--dim); font-size:14px; margin-top:5px;">A pattern analysis of the seven days preceding confirmed temporal displacement events</p>
+  <div class="author">sigma_watcher</div>
+  <div class="meta">
+    First published: 2023-04-17 // Last revised: 2024-11-30<br>
+    Dataset: 6 confirmed events with recoverable pre-event monitoring data<br>
+    Confidence level: High (pattern recurrence across independent events)<br>
+    Status: Active research &mdash; updated as new data surfaces
+  </div>
+</div>
+
+<!-- ============================================= -->
+<h2>Abstract</h2>
+<!-- ============================================= -->
+
+<p>Every confirmed temporal displacement event in the Bureau's registry follows the same pre-event pattern. Not approximately the same. <em>Exactly</em> the same. Seven days. Seven stages. The same sequence, in the same order, with the same timing, across events spanning four decades and three continents.</p>
+
+<p>The Bureau knows this. Their monitoring protocols are built around it. But the Bureau has never published the sequence publicly, because knowing the sequence means you can identify a displacement event <em>before it happens.</em> And the Bureau does not want civilians identifying displacement events before they happen.</p>
+
+<p>I've reconstructed the sequence from four sources: recovered Bureau monitoring logs, subject debriefs, D.R.'s annotations in the leaked archive, and two conversations with a former Bureau field operator who spoke to me on condition of anonymity. The pattern is consistent across all sources.</p>
+
+<p>If what's happening to you matches this sequence, it is not a coincidence.</p>
+
+<!-- ============================================= -->
+<h2>The Seven-Day Sequence</h2>
+<!-- ============================================= -->
+
+<p>Bureau monitoring data designates the event date as <strong>T-0</strong>. The pre-displacement sequence begins at <strong>T-7</strong> (seven days before the event). The sequence has never been observed to start earlier or later than seven days.</p>
+
+<div class="commentary">
+  I don't know why it's always seven days. The Bureau doesn't either, based on recovered internal memos. One researcher called it "the gestation period." Another called it "the field's way of asking permission." Whatever it is, the seven-day pattern has held across every single event in the dataset.
+  <div class="sig">&mdash; sigma_watcher</div>
+</div>
+
+<div class="timeline">
+
+<!-- T-7 -->
+<div class="t-entry">
+  <div class="t-day">T-7 // Day One</div>
+  <div class="t-title">The Artifact Surfaces</div>
+  <div class="t-body">
+    <p>The sequence always begins the same way: someone in the subject group discovers the artifact. It is never delivered. It is never planted by the Bureau (as far as I can determine). It simply <em>appears</em> &mdash; in a box of old belongings, in a pile of forgotten media, in a place where it could plausibly have always been but no one noticed until now.</p>
+
+    <p>The discovery always feels natural. The person who finds it doesn't think they've found something impossible. They think they've found something <em>interesting.</em> A weird old tape. A recording they don't remember making. Something that shouldn't exist but clearly does.</p>
+
+    <div class="datapoint">
+      <div class="dp-label">Bureau Monitoring Signature</div>
+      Localized electromagnetic fluctuation within 15m of artifact location. Duration: 2-6 hours preceding discovery. Detectable only with Bureau-grade equipment.
+    </div>
+
+    <div class="datapoint">
+      <div class="dp-label">Behavioral Indicator</div>
+      Subject who discovers the artifact invariably describes the discovery as "random" or "weird timing." Bureau analysts flag this as the artifact's activation signature &mdash; it creates the conditions for its own discovery.
+    </div>
+
+    <div class="correlation">
+      <strong>Cross-event correlation:</strong> In 5 of 6 events with recoverable data, the artifact was discovered by the subject who would later exhibit the strongest displacement coherence. The field may be selecting its first contact deliberately.
+    </div>
+  </div>
+</div>
+
+<!-- T-6 -->
+<div class="t-entry">
+  <div class="t-day">T-6 // Day Two</div>
+  <div class="t-title">The Pairings Are Revealed</div>
+  <div class="t-body">
+    <p>On the second day, the artifact's content becomes clear enough that the subject group understands: names are involved. Specifically, <em>their</em> names. Paired together.</p>
+
+    <p>This is the moment the displacement event transitions from "something one person found" to "something happening to the group." The revelation is always organic &mdash; the discoverer shares what they found, and the group collectively realizes the artifact is about <em>them.</em></p>
+
+    <p>What happens next is remarkably consistent across events: the paired subjects begin reaching out to each other. Not because anyone tells them to. Because it's the natural human response to being told "you are connected to this person." They start texting, calling, asking questions. <em>Who are you? What are you like? What would it mean to be you?</em></p>
+
+    <div class="datapoint">
+      <div class="dp-label">Bureau Monitoring Signature</div>
+      Sharp increase in communication frequency among subject group. Bureau intercepts show message volume increasing 300-500% within 12 hours of pairing discovery. The field is pulling them toward each other.
+    </div>
+
+    <div class="commentary">
+      This is the part that convinced me the pattern is real. I spoke to subjects from three different events, decades apart, different countries. All three described the same feeling: "I couldn't stop thinking about my person." Not anxiety. Curiosity. A pull. One subject said it was like "developing a crush on someone's entire existence." The field is already working. It's using the pairings to seed identity displacement before the event even happens.
+      <div class="sig">&mdash; sigma_watcher</div>
+    </div>
+  </div>
+</div>
+
+<!-- T-5 -->
+<div class="t-entry critical">
+  <div class="t-day">T-5 // Day Three</div>
+  <div class="t-title">External Contact</div>
+  <div class="t-body">
+    <p>Day three is the inflection point. Something from outside the friend group makes contact.</p>
+
+    <p>In older events (pre-1970), this took the form of a letter or a telegram. In the 1970s-80s, it was a phone call from an unknown number. In more recent events, it's a text message or an anonymous email. The medium changes. The message doesn't: <em>someone is watching, the artifact is real, and not everyone in the group can be trusted.</em></p>
+
+    <p>The Bureau's monitoring logs are frustratingly unclear about whether the Bureau itself initiates this contact. D.R.'s annotations suggest it does. A former field operator I spoke to insisted it doesn't &mdash; that the Bureau monitors but does not intervene. "We don't send messages," he said. "We intercept them. And we've never figured out who does send them."</p>
+
+    <div class="datapoint">
+      <div class="dp-label">Critical Detail</div>
+      The T-5 contact always introduces distrust. Always. Not "you're all in danger." Not "protect yourselves." The message specifically suggests that someone in the group has a different agenda. Bureau analysts call this the "fracture seed" &mdash; the moment the group's total trust is broken for the first time.
+    </div>
+
+    <div class="warning-box">
+      <strong>This is the day most subjects report the shift from "fun" to "real."</strong> Before T-5, the artifact and the pairings feel like a game or a mystery or a weird coincidence. After T-5, they feel like something that is happening <em>to you</em> whether you like it or not. Every subject I spoke to identified this day as the turning point.
+    </div>
+  </div>
+</div>
+
+<!-- T-4 -->
+<div class="t-entry">
+  <div class="t-day">T-4 // Day Four</div>
+  <div class="t-title">The Conduit Becomes Central</div>
+  <div class="t-body">
+    <p>On day four, something draws the group's attention to the displacement zone's conduit. In events where the conduit's nature is identifiable at all (see the <a href="index.html">archive debate</a> on what conduits actually are), this is the day subjects begin noticing anomalous behavior &mdash; an object out of place, an animal acting strangely, a feeling that something in the room is <em>paying attention</em> when it shouldn't be.</p>
+
+    <p>Bureau logs show a spike in conduit-adjacent electromagnetic readings beginning at T-4. Whatever is sustaining the bridge is powering up. The conduit isn't just present anymore. It's <em>active.</em></p>
+
+    <div class="datapoint">
+      <div class="dp-label">Subject Testimony Pattern</div>
+      "I started noticing things I'd never noticed before." "It felt like something in the house was awake." "Everyone started talking about [the conduit] like it mattered in a way it didn't before." These descriptions appear across multiple events with near-identical phrasing.
+    </div>
+
+    <div class="commentary">
+      Day four is when the stakes shift from intellectual to emotional. Days one through three are about the mystery. Day four is about caring. The conduit &mdash; whatever it is &mdash; becomes the thing everyone is suddenly invested in protecting, and no one can explain why.
+      <div class="sig">&mdash; sigma_watcher</div>
+    </div>
+  </div>
+</div>
+
+<!-- T-3 -->
+<div class="t-entry critical">
+  <div class="t-day">T-3 // Day Five</div>
+  <div class="t-title">Individual Briefings</div>
+  <div class="t-body">
+    <p>On day five, the experience becomes personal. Each subject receives individualized information. In Bureau terminology, this is the <strong>"dossier stage"</strong> &mdash; the point where each person learns something specific to their role in the displacement that no one else in the group knows.</p>
+
+    <p>The format varies: in some events, physical documents arrive. In others, messages are delivered individually. The content is always the same structure: <em>who you are becoming, what you need to know, and what you must not reveal to the others.</em></p>
+
+    <p>This is the day the group dynamic changes permanently. Before T-3, everyone is in it together. After T-3, everyone is carrying a secret. The shared experience develops private fault lines.</p>
+
+    <div class="datapoint">
+      <div class="dp-label">Bureau Protocol Note</div>
+      Recovered Bureau prep documents reference the "dossier drop" as the most operationally sensitive moment in the pre-displacement sequence. It is the only stage where the Bureau (or whoever is orchestrating the sequence) communicates with subjects <em>individually</em> rather than as a group.
+    </div>
+
+    <blockquote>
+      "Before the dossier, I was excited. After the dossier, I was nervous. Not because of what it said about me. Because of what it made me wonder about everyone else."
+      <cite>&mdash; Anonymous subject testimony, post-1990 event</cite>
+    </blockquote>
+  </div>
+</div>
+
+<!-- T-2 -->
+<div class="t-entry">
+  <div class="t-day">T-2 // Day Six</div>
+  <div class="t-title">The Summons</div>
+  <div class="t-body">
+    <p>Day six is quiet. After the intensity of the dossier stage, the sequence pulls back. There is typically one communication &mdash; clean, direct, unavoidable: <em>the time and place.</em></p>
+
+    <p>Bureau logs show minimal electromagnetic activity on T-2. The field is resting. The subjects are not. Every subject I spoke to described day six as the most anxious day of the sequence. The mystery is no longer building. It's waiting. Everything is in motion and nothing can be stopped.</p>
+
+    <div class="datapoint">
+      <div class="dp-label">Behavioral Indicator</div>
+      Bureau monitoring logs show a significant increase in subject-to-subject communication on T-2, despite the absence of new information. Subjects describe "needing to talk to someone who understands what's happening." The group is consolidating before the event.
+    </div>
+
+    <div class="commentary">
+      The subjects aren't just getting ready. They're saying goodbye to who they currently are. Most of them don't realize that's what they're doing. But when you read the message transcripts, it's unmistakable. They're closing loops. Finishing conversations. Telling people things they've been meaning to say. The field is making room.
+      <div class="sig">&mdash; sigma_watcher</div>
+    </div>
+  </div>
+</div>
+
+<!-- T-1 -->
+<div class="t-entry critical">
+  <div class="t-day">T-1 // Day Seven</div>
+  <div class="t-title">Silence, Then Arrival</div>
+  <div class="t-body">
+    <p>The final day begins with one last message. Across all events in the dataset, the final pre-displacement communication shares the same tone: <em>finality.</em> Not fear. Not excitement. The feeling that a door is about to close behind you.</p>
+
+    <p>Then: silence. No more messages. No more revelations. The sequence is complete. All that remains is arrival.</p>
+
+    <div class="datapoint">
+      <div class="dp-label">Bureau Monitoring Signature</div>
+      Electromagnetic readings in the displacement zone spike to maximum in the final 6-8 hours before the event. Bureau field teams are fully deployed by T-1 morning. The bridge is forming. The conduit's readings are off the scale.
+    </div>
+
+    <p>Every subject I spoke to said the same thing about arrival: the moment they walked through the door in costume, in character, as the person they'd spent a week becoming &mdash; something shifted. Not metaphorically. Physically. The room felt different. The air felt different. They weren't performing anymore.</p>
+
+    <p>"I walked in as her," one subject told me. "And by the time I sat down, I couldn't remember not being her."</p>
+
+    <div class="warning-box">
+      <strong>If you are currently in the sequence:</strong> By the time you reach T-1, you should be fully prepared. Costume complete. Identity researched. Era internalized. If you are not ready by Day Seven, you are not going to be ready. Read the <a href="preparation.html" style="color:var(--accent2);">preparation guide</a>. Do it now. You don't have time to do it later.
+    </div>
+  </div>
+</div>
+
+</div><!-- end timeline -->
+
+<!-- ============================================= -->
+<h2>Pattern Confidence</h2>
+<!-- ============================================= -->
+
+<p>How confident am I that this sequence is real? Here's my honest assessment:</p>
+
+<div style="margin: 20px 0;">
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Artifact discovery (T-7)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:95%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">95%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Pairing reveal (T-6)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:95%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">95%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">External contact (T-5)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:88%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">88%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Conduit activation (T-4)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:72%; background:var(--amber);"></div></div>
+    <span style="color:var(--amber);">72%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Individual briefing (T-3)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:90%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">90%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Summons (T-2)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:85%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">85%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Final silence (T-1)</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:98%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">98%</span>
+  </div>
+  <div class="confidence">
+    <span style="color:var(--dim); width:180px;">Seven-day duration</span>
+    <div class="conf-bar"><div class="conf-fill" style="width:100%; background:var(--green);"></div></div>
+    <span style="color:var(--green);">100%</span>
+  </div>
+</div>
+
+<p>The seven-day duration is the one thing I'm completely certain about. Every event. Every source. Seven days exactly. Whatever is driving the pre-displacement sequence, it operates on a clock, and that clock always runs for seven days.</p>
+
+<!-- ============================================= -->
+<h2>If You're In It Right Now</h2>
+<!-- ============================================= -->
+
+<p>If someone sent you this link because strange things are happening &mdash; a tape appeared, your name was on it, an unknown message arrived, and now you're not sure if this is real &mdash; I need you to understand something.</p>
+
+<p>It doesn't matter if it's real.</p>
+
+<p>Read that again. <em>It doesn't matter if it's real.</em></p>
+
+<p>If this is a displacement event and you prepare, you'll be ready. If this is not a displacement event and you prepare, you'll show up to something extraordinary fully committed and have the experience of your life.</p>
+
+<p>There is no scenario in which preparation is the wrong choice.</p>
+
+<p>Count the days. Match the pattern. And when you walk through that door on Day Seven, be someone else. Completely. Unrecognizably. Beautifully.</p>
+
+<p>The sequence doesn't wait for you to believe in it. It just runs.</p>
+
+<!-- ============================================= -->
+<h2>Sources</h2>
+<!-- ============================================= -->
+
+<div class="sources">
+  <span>[1]</span> B.T.A. Leaked Archive &mdash; monitoring logs, events TDA-1961 through TDA-1994<br>
+  <span>[2]</span> D.R. annotations, recovered archive margin notes (see <a href="index.html">main archive</a>)<br>
+  <span>[3]</span> Anonymous subject testimonies (3 subjects, 3 events, interviewed 2021-2023)<br>
+  <span>[4]</span> Former B.T.A. field operator, interviewed 2023-09 (identity protected)<br>
+  <span>[5]</span> analog_ghosts, <a href="preparation.html">Displacement Preparation Guide</a> (independent research)<br>
+  <span>[6]</span> Geomagnetic field data, NOAA archives (cross-referenced with event dates)
+</div>
+
+<!-- ============================================= -->
+
+<div class="site-footer">
+  <p>Compiled by sigma_watcher // Pattern research ongoing</p>
+  <p style="margin-top:8px;"><a href="index.html">B.T.A. Archive</a> &nbsp;&bull;&nbsp; <a href="preparation.html">Preparation Guide</a></p>
+  <p style="margin-top:15px; font-size:10px; color: rgba(85,85,104,0.4);">If your sequence has started, you have seven days. Use them.</p>
+</div>
+
+</div>
+</body>
+</html>

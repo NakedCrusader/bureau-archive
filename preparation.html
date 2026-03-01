@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IF YOU'VE BEEN SELECTED — READ THIS FIRST</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Bitter:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --bg: #1a1812;
+    --bg2: #221f17;
+    --text: #d4c9a8;
+    --dim: #8a7e62;
+    --accent: #e8b830;
+    --danger: #cc3333;
+    --safe: #4a9a4a;
+    --highlight: #fff3c4;
+    --link: #7ab3d4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* Subtle paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(232,184,48,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(232,184,48,0.02) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Header area — messy, personal */
+  .site-header {
+    border-bottom: 1px solid var(--dim);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  .site-header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .site-header .subtitle {
+    font-style: italic;
+    color: var(--dim);
+    font-size: 14px;
+  }
+
+  .site-header .updated {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-top: 10px;
+  }
+
+  /* Navigation crumb */
+  .nav-crumb {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 30px;
+  }
+  .nav-crumb a { color: var(--link); text-decoration: none; }
+  .nav-crumb a:hover { text-decoration: underline; }
+
+  /* Content sections */
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 40px 0 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--dim);
+  }
+
+  h3 {
+    font-size: 17px;
+    color: var(--text);
+    margin: 25px 0 10px;
+  }
+
+  p { margin-bottom: 16px; }
+
+  /* Author voice — personal asides */
+  .aside {
+    background: var(--bg2);
+    border-left: 3px solid var(--accent);
+    padding: 15px 20px;
+    margin: 20px 0;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--dim);
+  }
+  .aside strong { color: var(--text); font-style: normal; }
+
+  /* Warning boxes */
+  .warning {
+    background: rgba(204, 51, 51, 0.1);
+    border: 1px solid var(--danger);
+    padding: 15px 20px;
+    margin: 20px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: #e88;
+  }
+  .warning::before {
+    content: '⚠ ';
+    font-size: 16px;
+  }
+
+  /* Success/safe boxes */
+  .safe {
+    background: rgba(74, 154, 74, 0.1);
+    border: 1px solid var(--safe);
+    padding: 15px 20px;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+
+  /* The checklist */
+  .checklist {
+    list-style: none;
+    margin: 15px 0;
+    padding: 0;
+  }
+  .checklist li {
+    padding: 8px 0 8px 30px;
+    position: relative;
+    border-bottom: 1px dotted rgba(138, 126, 98, 0.3);
+  }
+  .checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    font-size: 16px;
+    color: var(--accent);
+  }
+  .checklist li.critical::before {
+    content: '‼';
+    color: var(--danger);
+  }
+
+  /* Numbered rules */
+  .rule {
+    counter-increment: rule;
+    padding: 15px 0 15px 50px;
+    position: relative;
+    border-bottom: 1px solid rgba(138, 126, 98, 0.2);
+  }
+  .rule::before {
+    content: counter(rule);
+    position: absolute;
+    left: 0;
+    top: 15px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+  .rules { counter-reset: rule; }
+
+  /* Quotes from Bureau docs */
+  blockquote {
+    border-left: 3px solid var(--dim);
+    padding: 10px 20px;
+    margin: 15px 0;
+    color: var(--dim);
+    font-style: italic;
+    font-size: 14px;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: rgba(138, 126, 98, 0.6);
+  }
+
+  /* Emphasis/highlight */
+  .hl { color: var(--accent); font-weight: 700; }
+  .danger { color: var(--danger); font-weight: 700; }
+  .calm { color: var(--safe); }
+
+  /* Testimony block */
+  .testimony {
+    background: var(--bg2);
+    border: 1px solid var(--dim);
+    padding: 20px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .testimony::before {
+    content: 'SUBJECT TESTIMONY';
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    background: var(--bg2);
+    padding: 0 8px;
+  }
+
+  /* Score card */
+  .scorecard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .score-item {
+    background: var(--bg2);
+    border: 1px solid rgba(138, 126, 98, 0.3);
+    padding: 15px;
+    text-align: center;
+  }
+  .score-item .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .score-item .value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 5px;
+  }
+  .score-item .value.good { color: var(--safe); }
+  .score-item .value.bad { color: var(--danger); }
+
+  /* Footer */
+  .site-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    text-align: center;
+  }
+  .site-footer a { color: var(--link); text-decoration: none; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .container { padding: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="site-header">
+  <h1>Displacement Preparation Guide</h1>
+  <div class="subtitle">What the Bureau won't tell you. What might save your life.</div>
+  <div class="updated">Last updated: 2024-02-09 // Maintained by analog_ghosts // Formerly hosted on three other domains (all taken down)</div>
+</div>
+
+<div class="nav-crumb">
+  <a href="index.html">B.T.A. Leaked Archive</a> &raquo; Preparation Guide
+</div>
+
+<p>If you're here, someone sent you this link. That means one of two things: either you've found the <a href="index.html" style="color:var(--link);">Bureau archive</a> and you're curious, or &mdash; and I sincerely hope this isn't the case &mdash; <span class="hl">you've been selected for a displacement event and it's already in motion.</span></p>
+
+<p>If it's the second one, keep reading. Everything below is compiled from recovered Bureau protocols, subject debriefs, and two conversations I had with someone who claims to be a former Conduit Protection Unit operator. I cannot verify any of this. I can tell you that the people who told me these things were either telling the truth or were the most committed liars I have ever encountered.</p>
+
+<div class="aside">
+  I want to be clear about something: <strong>I am not Bureau.</strong> I'm a researcher. I've spent four years studying the archive. I've talked to people who claim to have been through displacement events. I've never experienced one myself. But the patterns in the data are too consistent, and the people I've spoken to are too shattered or too grateful to be making this up. Something is happening. This guide is my attempt to help the next group survive it.
+</div>
+
+<!-- ============================================= -->
+<h2>The single most important thing</h2>
+<!-- ============================================= -->
+
+<p>I'm going to tell you the most important thing first, because some of you won't read this entire page. That's fine. Read this part.</p>
+
+<p style="font-size: 19px; text-align: center; padding: 20px 0; color: var(--accent); font-weight: 700; line-height: 1.5;">You must become the person you are assigned to be.<br>Not play them. Not imitate them. <em>Become</em> them.</p>
+
+<p>This is not theater. This is not a costume party where you show up, do a funny voice for ten minutes, and then drop it. The displacement field reads identity. If you are not committed &mdash; fully, deeply, embarrassingly committed &mdash; to being the person you've been paired with, <span class="danger">the field will not recognize you as a valid subject</span> and the displacement will fail.</p>
+
+<p>Not "might" fail. Will fail. For you, and potentially for everyone.</p>
+
+<blockquote>
+  "The field doesn't care about your driver's license. It doesn't care about your DNA. It reads something deeper than biology &mdash; it reads who you <em>believe</em> you are in that moment. This is why displacement only works during events of intense emotional commitment. The field needs you to mean it."
+  <cite>&mdash; Recovered Bureau training document, BTA-PREP-014, 1979</cite>
+</blockquote>
+
+<!-- ============================================= -->
+<h2>What "becoming" actually means</h2>
+<!-- ============================================= -->
+
+<p>I've talked to seven people who claim to have been through confirmed displacement events. All seven said the same thing in different words: <span class="hl">the ones who prepared survived. The ones who half-assed it got hurt.</span></p>
+
+<p>Here's what preparation actually looks like, based on subject testimony and Bureau protocols:</p>
+
+<div class="rules">
+
+<div class="rule">
+  <h3>Know their life, not just their name</h3>
+  <p>You are not wearing a nametag. You are <em>living in their skin.</em> By the time the event begins, you should be able to answer questions about the person you've become &mdash; their childhood, their habits, what makes them laugh, what they're afraid of, what they had for breakfast this morning. The more you know, the deeper the field reads your commitment, and the more stable the bridge becomes for everyone.</p>
+  <p>Bureau protocols require subjects to spend <span class="hl">a minimum of one week</span> researching their paired identity before the event. One week. Not one afternoon.</p>
+</div>
+
+<div class="rule">
+  <h3>Dress the part &mdash; completely</h3>
+  <p>This sounds shallow. It is not shallow. Every subject I spoke to said the same thing: the moment they put on the clothes, something shifted. One described it as "the field clicking into place, like a key turning." Another said, "I looked in the mirror and I wasn't me anymore. That's when I knew it was real."</p>
+  <p>The Bureau's internal term for this is <strong>"identity lock."</strong> It's the moment when your internal self-model aligns with the displaced identity. It cannot happen if you show up in your own clothes.</p>
+
+  <div class="warning">
+    Multiple debriefs reference subjects who arrived in partial costume &mdash; "close enough" outfits, wrong shoes, missing accessories. In every case, these subjects reported <strong>significantly more disorientation and distress</strong> during displacement. Two subjects who arrived without costumes at all were excluded from the displacement entirely. They stood in the room and watched everyone else's eyes go vacant. They were not extracted. They had to wait.
+  </div>
+</div>
+
+<div class="rule">
+  <h3>Practice the voice, the walk, the mannerisms</h3>
+  <p>You're probably thinking: "This is crazy. I can't <em>actually</em> become another person." You're right. You can't. But the field doesn't need perfection. It needs <span class="hl">sincere, sustained effort.</span> It's reading your commitment, not your accuracy.</p>
+  <p>Practice how they talk. Practice their posture. Practice their laugh. Do it alone in your car. Do it in front of the mirror. Do it until it feels less like acting and more like remembering. The Bureau calls this the <strong>"echo threshold"</strong> &mdash; the point where the performance stops being a performance and starts feeling like a memory you can't quite place.</p>
+</div>
+
+<div class="rule">
+  <h3>Learn the era</h3>
+  <p>If your displacement targets a specific time period, you need to know that era. Not Wikipedia-level knowledge. <em>Lived-in</em> knowledge. What music was playing. What people were wearing. What the news looked like. What things smelled like. The field is reading temporal coherence &mdash; your sense of belonging to the target period. If you're supposed to be in 1986 and you're making references to things that don't exist yet, the field registers that as dissonance.</p>
+
+  <div class="aside">
+    One subject told me she spent three days doing nothing but watching movies from the target year, listening to the music, reading the newspapers. "By the third day, the present felt like the weird one," she said. "That's when I knew I was ready." That's the echo threshold. That's what you're aiming for.
+  </div>
+</div>
+
+<div class="rule">
+  <h3>Stay in character from the moment you arrive</h3>
+  <p>This one is non-negotiable. The displacement field is sensitive to what the Bureau calls <strong>"identity bleed"</strong> &mdash; moments where a subject drops their displaced persona and reverts to their actual self. Brief lapses are survivable. Extended lapses weaken the bridge for the entire group.</p>
+  <p>The moment you walk through the door, you are not you. You are the person you've been assigned to become. Don't break. Don't wink at the camera. Don't nudge someone and say "this is crazy, right?" The field reads that as rejection. And it responds.</p>
+
+  <blockquote>
+    "Subject 4 broke character approximately ninety minutes into the event. Turned to Subject 2 and said, quote, 'I can't keep this up.' Within seconds, both subjects reported acute vertigo, nausea, and visual distortion. Subject 4 was unable to maintain displacement coherence for the remainder of the event and had to be manually stabilized by the Anchor. The event was nearly compromised."
+    <cite>&mdash; Event debrief, TDA-1973-0615-EPSILON, Field Report 7</cite>
+  </blockquote>
+</div>
+
+<div class="rule">
+  <h3>Do not resist the displacement</h3>
+  <p>Several Bureau files reference subjects who panicked during the event and tried to "snap out of it" &mdash; consciously pulling themselves back to their actual identity mid-displacement. This is described in every document as <span class="danger">extremely dangerous.</span> The field has already locked onto your displaced identity. Trying to yank yourself back creates what the Bureau calls a <strong>"fracture state"</strong> &mdash; two identities trying to occupy the same consciousness simultaneously.</p>
+  <p>Don't fight it. Lean in. If it feels too real, that means it's working.</p>
+</div>
+
+</div>
+
+<!-- ============================================= -->
+<h2>The numbers</h2>
+<!-- ============================================= -->
+
+<p>Based on the historical registry and subject testimony I've been able to verify:</p>
+
+<div class="scorecard">
+  <div class="score-item">
+    <div class="label">Successful extractions<br>(all subjects fully prepared)</div>
+    <div class="value good">94%</div>
+  </div>
+  <div class="score-item">
+    <div class="label">Complications when<br>one+ subject underprepared</div>
+    <div class="value bad">67%</div>
+  </div>
+  <div class="score-item">
+    <div class="label">Subjects who said preparation<br>"felt silly" beforehand</div>
+    <div class="value" style="color: var(--accent);">100%</div>
+  </div>
+  <div class="score-item">
+    <div class="label">Subjects who said preparation<br>"saved them" afterward</div>
+    <div class="value" style="color: var(--accent);">100%</div>
+  </div>
+</div>
+
+<p>Every single person I spoke to said the same thing: "I felt ridiculous preparing. I felt grateful I did."</p>
+
+<!-- ============================================= -->
+<h2>Preparation checklist</h2>
+<!-- ============================================= -->
+
+<p>Adapt this to your specific situation. Not everything will apply. But if you've been given a displaced identity and an event date, this is the minimum you should be doing in the days leading up:</p>
+
+<ul class="checklist">
+  <li class="critical">Confirm your paired identity. Know who you are becoming. If you don't have this information yet, <strong>get it immediately.</strong></li>
+  <li>Research their background. Personal history, personality, habits, speech patterns. Go deep.</li>
+  <li>Assemble a complete outfit. Not "close enough." <em>Right.</em> Shoes, accessories, hair, everything. If you can't find exact items, get as close as possible and commit to the rest with attitude.</li>
+  <li>If the event targets a specific era, immerse yourself in that time period. Music, movies, slang, news. Make it feel familiar.</li>
+  <li class="critical">Practice being them. Out loud. In front of a mirror. Until the echo threshold kicks in and it stops feeling like a performance.</li>
+  <li>Plan to arrive in character. Not "I'll change when I get there." Walk in the door as them. Drive there as them if you can stand it.</li>
+  <li class="critical">Do NOT break character once the event begins. Not even for a second. Not even as a joke. The field doesn't understand jokes.</li>
+  <li>If someone else breaks character, don't follow them. Stay locked in. You can stabilize them by staying committed. You can't help them by joining them in the break.</li>
+  <li>Trust the Anchor. You probably won't know who the Anchor is. That's by design. But somewhere in your group, someone is holding the whole thing together, and they're doing it without knowing. Your job is to make their job easier by <em>staying committed.</em></li>
+  <li>After the event, give yourself time. Subjects report disorientation, emotional intensity, and occasionally a profound sense of loss for the displaced identity. This is normal. It fades. But it takes a few days.</li>
+</ul>
+
+<!-- ============================================= -->
+<h2>Testimonies</h2>
+<!-- ============================================= -->
+
+<p>These are from conversations I've had over the past three years. Names withheld. Locations withheld. These people found me through the archive forums. I cannot verify their claims. I believe them.</p>
+
+<div class="testimony">
+  <p>"I didn't take the preparation seriously. I thought it was like a theme party. I wore a Hawaiian shirt because my guy liked Hawaiian shirts and I called it good. Everyone else showed up <em>transformed.</em> Hair, clothes, the way they walked, everything. I felt like I was watching something sacred and I'd shown up in flip-flops. When the event started, I felt it &mdash; this pull, this incredible pull &mdash; but it couldn't get a grip on me. I was too much myself. I watched everyone else go somewhere I couldn't follow. Longest four hours of my life."</p>
+  <p style="color: var(--dim); font-size: 13px; text-align: right;">&mdash; Anonymous subject, event date withheld</p>
+</div>
+
+<div class="testimony">
+  <p>"My wife and I were paired with each other, which we thought was hilarious until it started. I had studied everything about her &mdash; and I mean <em>everything.</em> How she stirs her coffee. The way she tilts her head when she's thinking. The little sound she makes before she laughs. By the night of the event, I wasn't performing her. I was <em>missing</em> her, from inside her. I know that doesn't make sense. It does if you've been through it."</p>
+  <p style="color: var(--dim); font-size: 13px; text-align: right;">&mdash; Anonymous subject, confirmed event post-1990</p>
+</div>
+
+<div class="testimony">
+  <p>"The guy who didn't prepare almost ruined it for everyone. You could feel it &mdash; like a wobble in the room. Like the floor was tilting. He kept saying his real name. Kept checking his phone. Every time he broke, the rest of us felt it physically. One of the other subjects &mdash; I think she was the Protector, she'd been the most committed all night &mdash; she grabbed his arm and said, 'You are [name]. Say it. You are [name].' He said it. The wobble stopped. But we came so close to losing the whole thing because one person didn't take it seriously."</p>
+  <p style="color: var(--dim); font-size: 13px; text-align: right;">&mdash; Anonymous subject, event date withheld</p>
+</div>
+
+<!-- ============================================= -->
+<h2>A note on skepticism</h2>
+<!-- ============================================= -->
+
+<p>I know how this reads. I know. I would not believe any of this if I hadn't spent four years looking at the data and talking to the people.</p>
+
+<p>Here's what I tell skeptics: you don't have to believe in temporal displacement to benefit from this preparation. Even if you think the entire Bureau archive is an elaborate hoax, even if you think the people I've talked to are delusional &mdash; the preparation process itself is valuable. Learning to embody another person is a profound exercise in empathy. Showing up fully committed to a shared experience is a gift to the people around you. And if you turn out to be wrong about the hoax part, you'll be grateful you prepared.</p>
+
+<p>The downside of preparing and being wrong: you had an interesting week and showed up to an event looking amazing.</p>
+
+<p>The downside of not preparing and being wrong: you stood in a room watching everyone you love go somewhere you couldn't follow, and you felt the floor tilt because you were the weak point.</p>
+
+<div class="safe">
+  <strong>Bottom line:</strong> Commit to the bit. Research the person. Nail the outfit. Learn the era. Practice until it stops feeling like acting. Walk in the door as someone else and don't look back until it's over. You will feel ridiculous. You will be grateful. Everyone who's been through it says the same thing.
+</div>
+
+<!-- ============================================= -->
+<h2>Questions I get asked</h2>
+<!-- ============================================= -->
+
+<h3>"What if I can't find the right clothes?"</h3>
+<p>Try harder. Thrift stores, costume shops, borrow from friends, online vintage sellers. The outfit doesn't have to be screen-accurate. It has to be <em>committed.</em> A full outfit that's slightly off is infinitely better than your regular clothes with one costume piece on top. The field reads intention, not labels.</p>
+
+<h3>"What if I don't know enough about the person?"</h3>
+<p>Ask. If you've been given a paired identity, someone in your group knows that person. Talk to them. Ask for stories, habits, mannerisms, the weird little details that make a person <em>them.</em> The more specific your knowledge, the deeper the identity lock.</p>
+
+<h3>"What if I feel stupid doing this?"</h3>
+<p>You will feel stupid. That's the echo threshold approaching. Push through it. Every subject who successfully displaced reported a moment where the preparation shifted from "embarrassing roleplay" to "something clicking into place." You can't get to the click without going through the embarrassment first.</p>
+
+<h3>"Does it matter if I believe in this?"</h3>
+<p>Honestly? The data is mixed. Some Bureau documents suggest that belief enhances displacement coherence. Others suggest the field doesn't care what you think &mdash; it only reads behavioral commitment. My personal recommendation: don't worry about believing. Just commit to the preparation and let the experience convince you or not.</p>
+
+<h3>"What happens if the event doesn't work?"</h3>
+<p>Then you and your friends had a bizarre, beautiful, incredibly committed evening together, and you'll have stories about it for the rest of your lives. The worst case scenario of full preparation is still a great night.</p>
+
+<!-- ============================================= -->
+
+<div class="site-footer">
+  <p>Maintained by analog_ghosts // Contact: <span style="color:var(--danger);">[redacted — previous contact methods compromised]</span></p>
+  <p style="margin-top:8px;">This page is not affiliated with the Bureau of Temporal Affairs.</p>
+  <p style="margin-top:8px;"><a href="index.html">B.T.A. Archive</a> &nbsp;&bull;&nbsp; <a href="sequence.html">The Pre-Displacement Sequence</a></p>
+  <p style="margin-top:15px; font-size:10px; color: rgba(138,126,98,0.4);">If you've been through an event and want to share your testimony, find me on the forums. You know which ones.</p>
+</div>
+
+</div>
+</body>
+</html>

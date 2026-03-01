@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B.T.A. // LEAKED INTERNAL ARCHIVE // DO NOT DISTRIBUTE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f18;
+    --text: #c8c8c8;
+    --dim: #666;
+    --accent: #e94560;
+    --accent2: #00ff88;
+    --navy: #1a1a2e;
+    --warn: #ff6b35;
+    --blue: #4a9eff;
+    --redact: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Courier Prime', monospace;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  @keyframes flicker { 0%, 95%, 100% { opacity: 1; } 96% { opacity: 0.7; } 97% { opacity: 1; } 98% { opacity: 0.4; } 99% { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+  @keyframes glitch { 0%, 90%, 100% { transform: translate(0); } 92% { transform: translate(-2px, 1px); } 94% { transform: translate(2px, -1px); } 96% { transform: translate(-1px, -1px); } 98% { transform: translate(1px, 1px); } }
+  @keyframes drift { 0% { background-position: 0 0; } 100% { background-position: 100px 100px; } }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  .warning-banner {
+    background: repeating-linear-gradient(45deg, #1a1a00, #1a1a00 10px, #222200 10px, #222200 20px);
+    border: 2px solid var(--warn);
+    padding: 15px 20px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    animation: pulse 3s infinite;
+  }
+  .warning-banner span { color: var(--warn); font-weight: bold; font-size: 13px; letter-spacing: 4px; }
+
+  .site-header {
+    border-bottom: 1px solid #222;
+    padding: 40px 0 30px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .site-header h1 { font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 8px; color: var(--dim); margin-bottom: 10px; }
+  .site-header .title { font-family: 'Special Elite', serif; font-size: 36px; color: var(--accent); margin-bottom: 5px; animation: flicker 8s infinite; }
+  .site-header .subtitle { font-size: 12px; letter-spacing: 6px; color: #444; }
+  .site-header .seal-note { font-size: 11px; color: #333; margin-top: 15px; font-style: italic; }
+
+  .doc-section {
+    background: var(--bg2);
+    border: 1px solid #1a1a28;
+    border-left: 3px solid var(--accent);
+    margin: 30px 0;
+    padding: 25px 30px;
+    position: relative;
+  }
+  .doc-section::before {
+    content: attr(data-classification);
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: var(--bg);
+    padding: 2px 12px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  .doc-section.green { border-left-color: var(--accent2); }
+  .doc-section.green::before { color: var(--accent2); border-color: var(--accent2); }
+  .doc-section.blue { border-left-color: var(--blue); }
+  .doc-section.blue::before { color: var(--blue); border-color: var(--blue); }
+  .doc-section.warn { border-left-color: var(--warn); }
+  .doc-section.warn::before { color: var(--warn); border-color: var(--warn); }
+
+  h2 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #1a1a28;
+  }
+  .doc-section.green h2 { color: var(--accent2); }
+  .doc-section.blue h2 { color: var(--blue); }
+  .doc-section.warn h2 { color: var(--warn); }
+
+  h3 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 2px;
+    margin: 20px 0 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  .redacted {
+    background: var(--redact);
+    color: var(--redact);
+    padding: 0 4px;
+    border-radius: 2px;
+    cursor: default;
+    user-select: none;
+    transition: all 0.3s;
+  }
+  .redacted:hover { background: #2a2a3e; color: #2a2a3e; }
+
+  .stamp {
+    display: inline-block;
+    border: 2px solid;
+    padding: 2px 10px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-family: 'Share Tech Mono', monospace;
+    transform: rotate(-2deg);
+    margin: 5px 0;
+  }
+  .stamp.red { border-color: var(--accent); color: var(--accent); }
+  .stamp.green { border-color: var(--accent2); color: var(--accent2); }
+  .stamp.warn { border-color: var(--warn); color: var(--warn); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 13px;
+  }
+  th {
+    background: #111118;
+    color: var(--accent);
+    text-align: left;
+    padding: 8px 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #222;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #111;
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(233,69,96,0.03); }
+
+  .handwritten {
+    font-family: 'Special Elite', serif;
+    color: var(--accent);
+    font-size: 16px;
+    transform: rotate(-1deg);
+    display: inline-block;
+    margin: 8px 0;
+  }
+  .handwritten.green { color: var(--accent2); }
+  .handwritten.blue { color: var(--blue); }
+
+  .file-ref {
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 2px;
+    font-family: 'Share Tech Mono', monospace;
+    margin-bottom: 15px;
+  }
+
+  .waveform {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--accent2);
+    font-size: 11px;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 10px 0;
+  }
+
+  .margin-note {
+    float: right;
+    width: 200px;
+    margin: 0 0 15px 20px;
+    padding: 10px 15px;
+    background: rgba(233,69,96,0.05);
+    border: 1px solid #1a1a28;
+    font-size: 12px;
+    color: #666;
+  }
+  .margin-note .label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  hr { border: none; border-top: 1px solid #1a1a28; margin: 25px 0; }
+  .divider-coded {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #222;
+    text-align: center;
+    margin: 20px 0;
+    letter-spacing: 2px;
+  }
+
+  blockquote {
+    border-left: 2px solid #333;
+    padding-left: 15px;
+    margin: 15px 0;
+    color: #888;
+    font-style: italic;
+  }
+
+  .corrupted { position: relative; display: inline; }
+  .corrupted::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px; top: 0;
+    color: var(--accent);
+    opacity: 0.3;
+    clip-path: inset(0 0 50% 0);
+    animation: glitch 5s infinite;
+  }
+
+  .site-footer {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 11px;
+    color: #222;
+    letter-spacing: 3px;
+  }
+
+  .cursor { animation: pulse 1s infinite; color: var(--accent2); }
+
+  details { margin: 10px 0; }
+  details summary {
+    cursor: pointer;
+    color: var(--blue);
+    font-size: 13px;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
+  }
+  details summary:hover { color: var(--accent); }
+  details[open] summary { margin-bottom: 10px; }
+
+  .ascii-box {
+    border: 1px solid #222;
+    padding: 15px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: #555;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 15px 0;
+    line-height: 1.4;
+  }
+
+  .highlight { color: var(--accent); }
+  .highlight-green { color: var(--accent2); }
+  .highlight-blue { color: var(--blue); }
+  .highlight-warn { color: var(--warn); }
+
+  .thread {
+    background: rgba(74,158,255,0.04);
+    border: 1px solid #151525;
+    padding: 15px;
+    margin: 12px 0;
+    position: relative;
+  }
+  .thread .thread-user {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+  .thread .thread-body { font-size: 13px; color: #999; }
+  .thread .thread-meta { font-size: 10px; color: #333; margin-top: 6px; }
+
+  .field-photo {
+    width: 100%;
+    margin: 15px 0;
+    border: 1px solid #1a1a28;
+    filter: grayscale(40%) contrast(1.1) brightness(0.9);
+    opacity: 0.85;
+    transition: filter 0.3s;
+  }
+  .field-photo:hover {
+    filter: grayscale(10%) contrast(1.05) brightness(0.95);
+    opacity: 1;
+  }
+  .photo-caption {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 2px;
+    margin: -10px 0 15px;
+    text-align: center;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 15px 0;
+  }
+  .photo-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border: 1px solid #1a1a28;
+    filter: grayscale(40%) contrast(1.1) brightness(0.9);
+    opacity: 0.85;
+  }
+  .photo-grid .photo-caption {
+    grid-column: 1 / -1;
+    margin: -5px 0 0;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 10px; }
+    .doc-section { padding: 15px; }
+    .margin-note { float: none; width: 100%; margin: 10px 0; }
+    .site-header .title { font-size: 24px; }
+    table { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="warning-banner">
+  <span>&#9888; THIS ARCHIVE HAS BEEN FLAGGED FOR UNAUTHORIZED EXTERNAL ACCESS &#9888;</span>
+</div>
+
+<div class="site-header">
+  <h1>LEAKED INTERNAL ARCHIVE</h1>
+  <img src="seal.svg" alt="Bureau of Temporal Affairs Seal" style="width:180px; height:180px; margin:15px auto; display:block; opacity:0.8; filter:grayscale(20%);">
+  <div class="title">BUREAU OF TEMPORAL AFFAIRS</div>
+  <div class="subtitle">DEPARTMENT OF CHRONOLOGICAL INTEGRITY</div>
+  <div class="seal-note">Est. <span class="redacted">1947</span> &mdash; "Protector Fidelis Frequentiam Mutat" &mdash; "Ancora Tenet"</div>
+</div>
+
+<p style="color:#444; font-size:13px; text-align:center; margin-bottom:30px;">
+  This archive was recovered from a compromised B.T.A. server node on <span class="redacted">██/██/2019</span>. The original leaker has not been identified. Contents have been partially reconstructed from corrupted database backups. Some files remain unrecoverable. The Bureau is aware this archive exists. They have not attempted to remove it. Draw your own conclusions about why.
+</p>
+
+<div class="divider-coded">// NODE::SIGMA // CLEARANCE::UNKNOWN // ARCHIVE STATUS::MIRRORED //</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 1: WHAT IS THE BUREAU? -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section" data-classification="PARTIALLY DECLASSIFIED">
+  <h2>WHAT IS THE BUREAU OF TEMPORAL AFFAIRS?</h2>
+  <div class="file-ref">FILE: BTA-OVERVIEW-001 // DECLASSIFIED: 2016 (PARTIAL)</div>
+
+  <p>The Bureau of Temporal Affairs (B.T.A.) is a clandestine agency operating outside conventional governmental oversight. Established by executive order in <span class="redacted">1947</span> &mdash; the same year as the founding of the CIA, the NSA, and the restructuring of the Department of Defense &mdash; the Bureau's stated purpose is the <strong>monitoring, management, and containment of temporal displacement events</strong>.</p>
+
+  <p>A temporal displacement event is an incident in which human consciousness is transferred across time periods, typically into the body of another individual living in the target era. The Bureau maintains that this is not theoretical. It is a documented, repeatable phenomenon.</p>
+
+  <div class="margin-note">
+    <span class="label">ANALYST NOTE</span>
+    If you're reading this for the first time: yes, it sounds insane. Keep reading. The documentation is too detailed, too consistent across decades of files, and too internally coherent to be fabricated. Either the Bureau is real, or someone has been running the most elaborate disinformation campaign in history for 70+ years.
+  </div>
+
+  <p>The Bureau operates through a system of regional <strong>nodes</strong>, each designated by a Greek letter. Currently known nodes include Alpha (Western Europe), Gamma (East Asia), Delta (Western US), Epsilon (South America), and <strong>Sigma</strong> (Eastern US). Each node monitors its region for displacement activity and maintains field teams for intervention when necessary.</p>
+
+  <p>The Bureau's motto &mdash; <em>"Protector Fidelis Frequentiam Mutat"</em> &mdash; translates as "The Faithful Protector Changes the Frequency." Its secondary motto is <em>"Ancora Tenet"</em> &mdash; "The Anchor Holds." The relationship between these two phrases has been the subject of extensive debate. See: THEORIES section.</p>
+
+  <p>The Bureau does not cause displacements. It claims to <em>manage</em> them. Whether that management is benign is a matter of considerable disagreement among those who've studied these files.</p>
+
+  <p class="handwritten">They don't cause them. They just decide who gets to come back. &mdash; D.R.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 2: DISPLACEMENT MECHANICS -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section green" data-classification="CLASSIFIED">
+  <h2>TEMPORAL DISPLACEMENT: HOW IT WORKS</h2>
+  <div class="file-ref">FILE: BTA-MECH-014 // STATUS: CLASSIFIED // CLEARANCE: LEVEL-5+</div>
+
+  <p>Every confirmed displacement event requires three components. No exceptions have been recorded in the Bureau's <span class="redacted">██</span>-year monitoring history.</p>
+
+  <h3>1. THE ARTIFACT</h3>
+  <p>A physical object encoded with temporal frequency data. Artifacts are not manufactured &mdash; they form naturally during moments of extreme temporal stress. The Bureau theorizes these moments occur when multiple timelines briefly overlap, usually coinciding with events of intense emotional significance: births, deaths, catastrophes, or convergences of many lives in a single place.</p>
+
+  <p>The most common artifact form is <strong>magnetic tape</strong> &mdash; the iron oxide coating is particularly receptive to temporal frequency encoding. VHS, audio cassette, and reel-to-reel formats have all been documented. Less common artifacts include <span class="redacted">vinyl recordings</span>, <span class="redacted">exposed photographic film</span>, and in one disputed case from 1958, a <span class="redacted">music box recovered from ██████, France</span> that played a melody no one had ever composed.</p>
+
+  <p>When an artifact is played or activated, it emits a frequency signature that initiates the displacement sequence. The frequency is inaudible to humans &mdash; it manifests as "static" or "interference" to human ears. Bureau research suggests the frequency may be perceptible to certain animals, though this remains a subject of internal debate (see Conduit section below).</p>
+
+  <blockquote>"During artifact activation, we have observed behavioral anomalies in nearby fauna &mdash; agitation, flight responses, vocalizing. Whether this constitutes genuine perception of the temporal bridge or a reaction to electromagnetic byproducts of the activation process is unresolved." &mdash; Dr. <span class="redacted">████████</span>, B.T.A. Field Research Division, 1984</blockquote>
+
+  <p class="handwritten green">The animals react. Every time. Something in that room changes when the artifact activates, and they feel it before we do. &mdash; D.R.</p>
+
+  <h3>2. THE CONDUIT</h3>
+  <p>The conduit is what the Bureau calls the biological anchor point for the temporal bridge. Without a conduit, the bridge has no physical tether and displacement cannot stabilize. The conduit holds the bridge open passively &mdash; it does not choose to participate and may not be aware of its role.</p>
+
+  <div class="margin-note">
+    <span class="label">FIELD NOTE</span>
+    The Bureau's own documentation is frustratingly vague about what a conduit actually <em>is</em>. Early files describe it as "a living organism whose biological frequency sustains the bridge." Later documents broaden this to "any sufficiently resonant biological system within the displacement zone." The community has latched onto the animal theory (see below), but the Bureau itself has never published a definitive statement.
+  </div>
+
+  <p>What is known: the conduit must be physically present in the displacement zone for the duration of the event. If the conduit is separated from the zone or experiences sufficient distress, the bridge destabilizes. Depending on timing, this can result in snap-back (painful but survivable), identity fragmentation (severe), or permanent stranding.</p>
+
+  <img src="conduit-sigma-1986-surveillance.jpg" alt="Field surveillance photograph" class="field-photo" style="max-width:500px; display:block; margin:20px auto;">
+  <div class="photo-caption">SURVEILLANCE IMAGE // NODE SIGMA // DESIGNATION: <span class="redacted">████████</span> // STATUS: <span class="redacted">████████</span><br>Recovered from B.T.A. field operations archive. Subject and context unconfirmed.</div>
+
+  <p>The Bureau maintains a division called the <strong>Conduit Protection Unit (CPU)</strong>, whose protocols are among the most heavily classified documents in the archive. What exactly they're protecting &mdash; and from what &mdash; remains unclear.</p>
+
+  <p><strong>The Animal Theory:</strong> One popular interpretation holds that the conduit is a nearby animal. Proponents point to the historical registry (below), where several events note animal presence, and to field reports describing behavioral anomalies during activation. Skeptics counter that the registry data is corrupted, that the "conduit" column may be recording <em>proximity</em> rather than <em>function</em>, and that the 1958 France event &mdash; where a music box apparently served as conduit &mdash; disproves the entire biological model. Other theories include: the conduit is a <em>person</em> in the room who is unknowingly resonant (the "hidden subject" theory), the conduit is the <em>location itself</em> (the "ley line" theory), or the conduit is the emotional bond between subjects rather than any physical organism (the "entanglement" theory). The Bureau has never officially endorsed any of these interpretations.</p>
+
+  <blockquote>"Something was in the room with us. Not a person. It sat perfectly still for the entire event. I thought it was part of the equipment." &mdash; Subject debrief, Event <span class="redacted">TDA-████-████-████</span>, 1983</blockquote>
+
+  <h3>3. THE PAIRED SUBJECTS</h3>
+  <p>Displacement occurs in pairs. Subject A's consciousness transfers to Subject B's temporal position, and vice versa. The pairings are encoded on the artifact itself and <strong>cannot be altered</strong> once the artifact has been activated. Who is paired with whom appears to be determined by the temporal field, not by any human decision. Bureau mathematicians have spent decades attempting to predict pairing logic. Current models explain approximately <span class="redacted">██</span>% of observed pairings, which the Bureau considers "barely better than guessing."</p>
+
+  <p>There is one exception to the pairing rule: <strong>The Anchor.</strong></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 3: THE ANCHOR PRINCIPLE -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section blue" data-classification="TOP SECRET">
+  <h2>THE ANCHOR PRINCIPLE</h2>
+  <div class="file-ref">FILE: BTA-ANCHOR-009 // STATUS: TOP SECRET // CLEARANCE: LEVEL-7</div>
+
+  <p>In every confirmed displacement event involving more than four subjects, one individual is designated as <strong>The Anchor</strong>. This person appears on the artifact's pairing list but <em>does not actually displace</em>. Their consciousness remains fixed in its original position.</p>
+
+  <p>The Anchor is the fixed point around which all displacements orbit. Without an Anchor, the displacement field destabilizes and subjects experience "temporal drift" &mdash; a gradual dissolution of identity that, if unchecked, results in permanent ego death. The Anchor prevents this. They hold the shape of reality in place.</p>
+
+  <div class="margin-note">
+    <span class="label">CRITICAL DOCTRINE</span>
+    The Anchor never knows they are the Anchor. Bureau standing order since 1962: <strong>NEVER inform the Anchor of their status during an active displacement.</strong> The belief that they have displaced, like everyone else, appears structurally necessary for the Anchor function to operate.
+  </div>
+
+  <p>The phrase <em>"the anchor holds"</em> appears in every artifact decoded to date &mdash; always as the final message before the displacement confirmation signal. Bureau linguists believe it is not a command or a hope, but a <strong>statement of fact</strong> from the temporal field itself: the Anchor is in place. Proceed.</p>
+
+  <p>Who becomes the Anchor appears to be determined by emotional connection to the displacement date. In events tied to a specific calendar date, the Anchor is typically the person for whom that date holds the deepest personal significance &mdash; a birthday, an anniversary, a day of profound change.</p>
+
+  <p>The Bureau has never predicted who the Anchor will be before activation. They have also never encountered an event where the Anchor failed. Bureau Director <span class="redacted">████████</span>, in a 1991 internal memo, wrote: <em>"The field does not choose Anchors carelessly. In thirty years of observation, the Anchor has held every single time. Whatever the field is selecting for, it has not once been wrong."</em></p>
+
+  <p class="handwritten blue">She never knows. That's the most beautiful part. She's the reason everyone gets to come home, and she never knows she's doing it. &mdash; D.R.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 4: THREATS TO DISPLACEMENT -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section warn" data-classification="CLASSIFIED">
+  <h2>KNOWN THREATS TO DISPLACEMENT INTEGRITY</h2>
+  <div class="file-ref">FILE: BTA-THREAT-007 // STATUS: CLASSIFIED // CLEARANCE: LEVEL-5+</div>
+
+  <p>The Bureau has documented multiple categories of threats that can compromise a displacement event. These range from the mundane to the catastrophic.</p>
+
+  <h3>THREAT CLASS 1: CONDUIT COMPROMISE</h3>
+  <p>The most severe threat category. If the conduit is separated from the displacement zone, the temporal bridge weakens. If separation is prolonged or the conduit experiences sufficient distress, the bridge can collapse entirely. Depending on the nature and timing of the compromise, subjects may experience snap-back (painful but survivable), identity fragmentation (severe), or permanent stranding in the target time period (catastrophic).</p>
+  <p>The Bureau has documented <span class="redacted">██</span> instances of conduit compromise across its monitoring history. In <span class="redacted">██</span> of those cases, at least one subject was permanently stranded. Most compromises were accidental &mdash; conduits wandering out of the displacement zone, noise disturbances, <span class="redacted">████████████████████████████</span>. Intentional conduit interference is exceedingly rare and heavily classified.</p>
+  <p style="font-size:12px; color:#555;"><em>Note: Details of specific conduit compromise methods are classified beyond the level recoverable from this archive. Multiple files in the BTA-CTM series were encrypted with a key that was not present on the compromised server.</em></p>
+
+  <h3>THREAT CLASS 2: ANCHOR DESTABILIZATION</h3>
+  <p>If the Anchor becomes aware of their role, experiences extreme emotional disturbance, or is physically removed from the displacement event, the field destabilizes. This does not cause immediate bridge collapse (the conduit maintains the bridge independently), but it allows temporal drift to accelerate. In a destabilized field, subjects begin losing coherent identity within <span class="redacted">██</span> minutes.</p>
+  <p>Protecting the Anchor's psychological stability is a Bureau priority second only to protecting the conduit.</p>
+
+  <h3>THREAT CLASS 3: SUBJECT NON-COMPLIANCE</h3>
+  <p>The displacement field requires subjects to <em>commit</em> to the displacement &mdash; to genuinely attempt to become the person they've been paired with. Subjects who refuse to engage, break character persistently, or actively resist the displacement create "dead spots" in the field. One non-compliant subject is manageable. Three or more can cause a partial collapse.</p>
+  <p>This is why the Bureau's communications to subject groups emphasize the importance of becoming your displaced identity. It's not theater. It's structural.</p>
+
+  <h3>THREAT CLASS 4: EXTERNAL INTERFERENCE</h3>
+  <p>Non-subjects who enter the displacement zone during an active event can cause unpredictable disruptions. The field doesn't recognize them and may attempt to "assign" them by force, resulting in involuntary partial displacement. The Bureau calls these individuals "strays" and maintaining perimeter security around displacement zones is a standard CPU function.</p>
+
+  <h3>THREAT CLASS 5: <span class="redacted">████████████████████████</span></h3>
+  <p><span class="redacted">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></p>
+  <p style="font-size:12px; color:#555;"><em>This threat class appears only in documents recovered from a secondary archive. The entire section remains encrypted. Whatever Threat Class 5 describes, the Bureau considered it sensitive enough to store separately from the other four classes. It has never been referenced in any other recovered document.</em></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 5: BEHAVIORAL ARCHETYPES -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section green" data-classification="CLASSIFIED">
+  <h2>DISPLACEMENT SUBJECT BEHAVIORAL ARCHETYPES</h2>
+  <div class="file-ref">FILE: BTA-PSYCH-031 // STATUS: CLASSIFIED // LAST UPDATED: 1994</div>
+
+  <p>Bureau psychologists have identified recurring behavioral archetypes that emerge among displacement subjects. These are not assigned or predicted &mdash; they manifest naturally during the event, often surprising the subjects themselves. The Bureau uses archetype identification to anticipate group dynamics and potential conflicts.</p>
+
+  <table>
+    <tr><th>ARCHETYPE</th><th>DESCRIPTION</th><th>OCCURRENCE</th></tr>
+    <tr>
+      <td><strong>THE PROTECTOR</strong></td>
+      <td>Takes responsibility for the group's safety. Monitors for danger. Often the emotional center of the group &mdash; the person everyone instinctively looks to when things get uncertain. Bureau psychologists note the Protector rarely seeks credit or visibility.</td>
+      <td>~15% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE NOSTALGIST</strong></td>
+      <td>Falls in love with the target time period. May resist returning. In extreme cases, actively works to prevent extraction because they don't want to go home. The Nostalgist is not a villain &mdash; they're just someone who found something in the past that they're missing in the present.</td>
+      <td>~12% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE RITUALIST</strong></td>
+      <td>Attempts to interact with the temporal field through unconventional means &mdash; candles, herbs, spoken invocations, crystals. The Bureau initially dismissed these as irrelevant. Then they started measuring field fluctuations during ritual activity. Now the Ritualist archetype is flagged as <span class="highlight-green">"unexplained but non-trivial."</span></td>
+      <td>~10% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE INVESTIGATOR</strong></td>
+      <td>Treats the displacement as a puzzle. Systematic, detail-oriented, obsessive about evidence. Often the first to notice that something doesn't add up. Can tip into paranoia under sustained stress.</td>
+      <td>~18% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE HEIR</strong></td>
+      <td>Discovers an unexpected personal connection to the displacement zone. Family history, property records, ancestral ties. The displacement zone "knows" them. This archetype often reports feeling at home in the target period in a way that unsettles them.</td>
+      <td>~8% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE EXPERIMENTER</strong></td>
+      <td>Pushes boundaries. Moves objects between time periods. Tests what's possible. Starts small and escalates. The Experimenter is the archetype most likely to accidentally discover something the Bureau wishes they hadn't.</td>
+      <td>~11% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE SECRET KEEPER</strong></td>
+      <td>Holds critical information &mdash; often without fully understanding its significance. Possesses a document, recording, or object that is key to the group's survival or the displacement's resolution. May withhold it out of fear, confusion, or a feeling that "it's not time yet."</td>
+      <td>~14% of subjects</td>
+    </tr>
+    <tr>
+      <td><strong>THE COLLECTOR</strong></td>
+      <td>Recognizes that objects in the displacement zone have value. Driven to acquire and catalog. May prioritize collection over collaboration. Not malicious &mdash; just intensely focused on things rather than people.</td>
+      <td>~12% of subjects</td>
+    </tr>
+  </table>
+
+  <p>Bureau protocol requires field agents to identify archetypes within the first hour of a displacement event. The interaction between archetypes is as important as the archetypes themselves. A Protector paired with an Experimenter creates friction. A Nostalgist and an Investigator will pull the group in opposite directions. A Secret Keeper near a Ritualist can produce <span class="redacted">████████████████████</span>.</p>
+
+  <p class="handwritten green">You won't know who you are in there until it starts. Nobody does. The field finds parts of you that you didn't know were there. &mdash; D.R.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 6: HISTORICAL DISPLACEMENT REGISTRY -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section" data-classification="CLASSIFIED">
+  <h2>HISTORICAL DISPLACEMENT EVENT REGISTRY (PARTIAL)</h2>
+  <div class="file-ref">FILE: BTA-REGISTRY-GLOBAL // STATUS: CORRUPTED RECOVERY</div>
+
+  <p>The following is a partial listing of confirmed temporal displacement events extracted from a corrupted database backup. Most details remain classified or unrecoverable. Events are listed by the Bureau's internal identification system: TDA-[year]-[date]-[node].</p>
+
+  <table>
+    <tr><th>EVENT ID</th><th>YEAR</th><th>LOCATION</th><th>SUBJECTS</th><th>CONDUIT (UNVERIFIED)</th><th>OUTCOME</th></tr>
+    <tr><td>TDA-1952-0312-ALPHA</td><td>1952</td><td><span class="redacted">████████, England</span></td><td>3</td><td>Siamese cat (present)</td><td>SUCCESSFUL EXTRACTION</td></tr>
+    <tr><td>TDA-1958-0701-ALPHA</td><td>1958</td><td><span class="redacted">██████, France</span></td><td>4</td><td><em>Music box (disputed)</em></td><td>SUCCESSFUL EXTRACTION*</td></tr>
+    <tr><td>TDA-1961-0820-GAMMA</td><td>1961</td><td><span class="redacted">████████, Japan</span></td><td>5</td><td><span class="redacted">████████████</span></td><td>SUCCESSFUL EXTRACTION</td></tr>
+    <tr><td>TDA-1967-1104-DELTA</td><td>1967</td><td><span class="redacted">████████, CA</span></td><td>7</td><td>Persian cat (present)</td><td><span class="highlight-warn">2 SUBJECTS STRANDED</span></td></tr>
+    <tr><td>TDA-1973-0615-EPSILON</td><td>1973</td><td><span class="redacted">██████████, Brazil</span></td><td>4</td><td><span class="redacted">████████████</span></td><td>SUCCESSFUL EXTRACTION</td></tr>
+    <tr><td>TDA-1978-0922-ZETA</td><td>1978</td><td><span class="redacted">████████, Greece</span></td><td>6</td><td>Maine Coon (present)</td><td><span class="highlight">BRIDGE COLLAPSE &mdash; ALL STRANDED</span></td></tr>
+    <tr><td>TDA-1982-0401-ETA</td><td>1982</td><td><span class="redacted">████████████, IL</span></td><td>4</td><td><span class="redacted">████████████</span></td><td>SUCCESSFUL EXTRACTION</td></tr>
+    <tr><td style="color:var(--accent);">TDA-1986-0301-SIGMA</td><td style="color:var(--accent);">1986</td><td style="color:var(--accent);"><span class="redacted">████████████████</span></td><td style="color:var(--accent);">9</td><td style="color:var(--accent);"><span class="redacted">████████████</span></td><td style="color:var(--accent);">EXTRACTION CONFIRMED &mdash; <em>FILE SEALED BY DIRECTOR ORDER</em></td></tr>
+    <tr><td>TDA-1991-<span class="redacted">████</span>-<span class="redacted">██</span></td><td>1991</td><td><span class="redacted">████████████████████</span></td><td><span class="redacted">██</span></td><td><span class="redacted">████████████</span></td><td><span class="redacted">████████████████████████████</span></td></tr>
+    <tr><td>TDA-1994-0214-DELTA</td><td>1994</td><td><span class="redacted">████████, OR</span></td><td>5</td><td>Orange tabby</td><td>SUCCESSFUL EXTRACTION</td></tr>
+  </table>
+
+  <p style="font-size:12px; color:#555;">*The 1958 France event is disputed because the artifact was a music box rather than magnetic tape, and the "conduit" was apparently the box itself. Some Bureau analysts classify this as a different phenomenon entirely. Others argue it proves the animal-conduit theory is wrong, or at minimum incomplete. Note that the "conduit" column in this registry is labeled UNVERIFIED &mdash; it may record what was <em>present</em> in the displacement zone, not what was definitively identified as the conduit.</p>
+
+  <p style="font-size:12px; color:#555;">Note: Event TDA-1978-0922-ZETA remains the Bureau's most significant failure. The temporal bridge collapsed during the event and all 6 subjects were permanently stranded in the target period. They have not been recovered. The cause of the bridge collapse is classified.</p>
+
+  <p style="font-size:12px; color:#555;">Note: Event TDA-1986-0301-SIGMA is unique in this archive. It is the only event where the outcome reads "EXTRACTION CONFIRMED" but the file has been sealed by direct order of the Bureau Director. In every other successful extraction, the full case file is available at the standard classification level. Whatever happened on March 1, 1986, it was apparently a success &mdash; but one the Bureau doesn't want anyone studying too closely.</p>
+
+  <p class="handwritten">Nine subjects. Largest event ever. They all came back. So why did the Director personally seal the file? What went right that scared them? &mdash; D.R.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 6B: RECOVERED FIELD DOCUMENTATION -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section warn" data-classification="RESTRICTED">
+  <h2>RECOVERED FIELD DOCUMENTATION</h2>
+  <div class="file-ref">FILE: BTA-FIELD-PHOTO-ARCHIVE // STATUS: RESTRICTED // PARTIAL RECOVERY</div>
+
+  <p style="color:#555; font-size:13px;">The following images were recovered from the same compromised server as the text archive. They appear to be field photographs taken by Bureau Conduit Protection Unit personnel during or immediately after displacement events. Most are unlabeled. Where identification has been possible, event designations are noted.</p>
+
+  <div class="photo-grid">
+    <img src="field-photo-eta-1982-subject3.jpg" alt="Field photo - covered body">
+    <img src="field-photo-delta-1967-recovery.jpg" alt="Field photo - subject recovery">
+    <img src="field-photo-epsilon-1973-extraction.jpg" alt="Field photo - emergency extraction">
+    <img src="field-photo-gamma-1961-recovery.jpg" alt="Field photo - subject recovery outdoors">
+    <div class="photo-caption">CLOCKWISE FROM TOP LEFT: Event TDA-1982-0401-ETA, subject S3 post-extraction (note: physical trauma consistent with snap-back, not displacement injury) // Event TDA-1967-1104-DELTA, field recovery of stranded subject // Event TDA-1973-0615-EPSILON, CPU emergency response // Event TDA-1961-0820-GAMMA, subject recovered from temporal drift state (outdoor displacement zone)</div>
+  </div>
+
+  <img src="field-photo-zeta-1978-stasis.jpg" alt="Field photo - stasis chamber" class="field-photo">
+  <div class="photo-caption">EVENT TDA-1978-0922-ZETA // <span style="color:var(--accent);">THE GREECE INCIDENT</span> // Subject in Bureau stasis pod following failed extraction attempt. All six subjects from the Zeta event were placed in long-term stasis after bridge collapse. Bureau records indicate they remain in stasis at Node <span class="redacted">████████</span>. Officially listed as "permanently stranded." Stasis protocol suggests the Bureau has not given up on recovery. Or that they're keeping them alive for another reason.</div>
+
+  <p class="handwritten" style="color:var(--warn);">Six people in pods for 46 years. The Bureau calls it "long-term monitoring." I call it a waiting room for a rescue that's never coming. &mdash; D.R.</p>
+
+  <p style="font-size:12px; color:#444; margin-top:15px;"><em>Note: No field photographs from Event TDA-1986-0301-SIGMA were recovered in this archive. Sigma-node visual documentation is stored on a separate, air-gapped system. The Bureau is very serious about keeping 1986 sealed.</em></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 7: THE FREQUENCY WINDOW -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section blue" data-classification="CLASSIFIED">
+  <h2>THE FREQUENCY WINDOW: 1980&ndash;1995</h2>
+  <div class="file-ref">FILE: BTA-FREQ-018 // STATUS: CLASSIFIED</div>
+
+  <p>Bureau monitoring data indicates that temporal displacement events are not evenly distributed across history. They cluster around specific time periods that the Bureau calls <strong>"Frequency Windows"</strong> &mdash; eras when the temporal membrane is unusually thin and displacement becomes more likely.</p>
+
+  <p>The largest documented Frequency Window spans <strong>1980 to 1995</strong>, with a peak around <strong>1986</strong>. During this fifteen-year period, the Bureau logged more displacement events than in all other years combined. The reasons are not fully understood, but several theories exist:</p>
+
+  <details>
+    <summary>[EXPAND] Theory: Magnetic Media Saturation</summary>
+    <p style="margin-top:10px;">The 1980s saw the mass proliferation of magnetic media &mdash; VHS tapes, audio cassettes, floppy disks. Every household had dozens or hundreds of magnetic surfaces capable of capturing temporal frequency data. The sheer volume of potential artifacts increased exponentially. More magnetic media = more opportunities for naturally occurring temporal encoding = more artifacts = more displacement events.</p>
+  </details>
+
+  <details>
+    <summary>[EXPAND] Theory: Cultural Temporal Awareness</summary>
+    <p style="margin-top:10px;">The 1980s produced an unprecedented volume of popular media about time travel. Films, television shows, and books about temporal displacement saturated the culture. Bureau sociologists have proposed that this collective fascination with time travel created a kind of "cultural resonance" that thinned the temporal membrane. In other words: the more people <em>thought</em> about time travel, the more possible it became. This theory is controversial within the Bureau and has been called "unfalsifiable mysticism" by the physics division.</p>
+  </details>
+
+  <details>
+    <summary>[EXPAND] Theory: Geomagnetic Anomaly</summary>
+    <p style="margin-top:10px;">Earth's magnetic field underwent measurable fluctuations during the 1980s, including the well-documented geomagnetic jerk of 1986. Some Bureau scientists believe these fluctuations interacted with the temporal membrane in ways that increased its permeability. This theory has the most empirical support but doesn't fully explain why events clustered in <em>this specific</em> fifteen-year window and not during other periods of geomagnetic activity.</p>
+  </details>
+
+  <details>
+    <summary>[EXPAND] Theory: <span class="redacted">████████████████████████████████</span></summary>
+    <p style="margin-top:10px;"><span class="redacted">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></p>
+  </details>
+
+  <p>Whatever the cause, the Frequency Window makes 1986 a year of particular significance. Artifacts from this year are more common, more powerful, and more likely to produce large-scale displacement events. The Bureau has flagged <span class="redacted">██</span> dates in 1986 as "critical convergence points" where the membrane is at its thinnest. March 1 is one of them.</p>
+
+  <p class="handwritten blue">1986. The year the wall between times was thinnest. And someone found a tape. &mdash; D.R.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 8: FORUM THREADS -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section" data-classification="OPEN SOURCE" style="border-left-color:#555;">
+  <h2 style="color:#888;">COMMUNITY DISCUSSION (RECOVERED)</h2>
+  <div class="file-ref">FILE: EXTERNAL // SOURCE: ARCHIVED FORUM THREADS // UNVERIFIED</div>
+
+  <p style="color:#555; font-size:13px; margin-bottom:20px;">The following are excerpts from online discussion forums where individuals have analyzed the Bureau archive. These are not Bureau documents. They represent external speculation and should be treated accordingly.</p>
+
+  <div class="thread">
+    <div class="thread-user">temporal_drift_99</div>
+    <div class="thread-body">Has anyone else noticed that in every successful extraction, the Anchor was connected to the date, not the location? It's always someone's birthday, anniversary, something deeply personal about that specific day. The field doesn't care where you are. It cares about WHEN.</div>
+    <div class="thread-meta">Posted 2020-03-14 // 47 replies</div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">sigma_watcher</div>
+    <div class="thread-body">The 1986 event. 9 subjects. Largest ever. "EXTRACTION CONFIRMED" but then the Director PERSONALLY sealed the case file. Every other successful extraction is fully documented. 1978 was a total disaster and we can read the whole report. But 1986 goes right and they lock it down harder than anything else in the archive? What kind of success needs to be buried?</div>
+    <div class="thread-meta">Posted 2021-08-22 // 112 replies</div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">conduit_freq_analysis</div>
+    <div class="thread-body">I've been mapping artifact activation dates against geomagnetic field data. The correlation is insane. Every confirmed event occurs within 48 hours of a measurable geomagnetic fluctuation. 1986 had THREE major fluctuations in the first quarter alone. Whatever thinned the membrane that year, late winter was the peak of the peak.</div>
+    <div class="thread-meta">Posted 2022-01-06 // 29 replies</div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">deleted_user_4471</div>
+    <div class="thread-body">Has anyone tried translating the secondary motto? "Ancora Tenet" &mdash; "The Anchor Holds." Every artifact has this phrase encoded at the end. Every single one. The Bureau treats it like a technical confirmation, like a status check. But what if it's not? What if it's older than the Bureau? What if the Bureau named themselves after the phrase and not the other way around?</div>
+    <div class="thread-meta">Posted 2022-05-18 // 203 replies // <span class="highlight">USER ACCOUNT DELETED 3 DAYS LATER</span></div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">nocturne_88</div>
+    <div class="thread-body">I keep coming back to the archetypes. The Bureau says they EMERGE during displacement &mdash; they're not who you normally are, they're who you become under temporal stress. That means you can't predict who will be the Protector or the Investigator until it starts. Which means the Bureau can't predict who will be the threat until it's too late.</div>
+    <div class="thread-meta">Posted 2023-02-11 // 67 replies</div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">analog_ghosts</div>
+    <div class="thread-body">Something nobody's talking about: the conduit's behavior CHANGES over the course of the pre-displacement period. First they freak out. Then they calm down. Then they start GUARDING the artifact. The Bureau doesn't have a good explanation for this. I do: the conduit knows. On some level, the conduit knows what's coming and it's choosing to be part of it. Which means when a conduit is compromised during an event, it's not just a tactical loss. It's a betrayal of trust.</div>
+    <div class="thread-meta">Posted 2023-07-30 // 41 replies</div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">sigma_watcher</div>
+    <div class="thread-body">New theory about 1986. What if the Director sealed the file because the extraction worked in a way that SHOULDN'T have been possible? What if something unprecedented happened &mdash; something that contradicts the Bureau's own models &mdash; and they buried the evidence rather than rewriting their entire framework? That would explain "extraction confirmed" + Director seal. It's not that something went wrong. It's that something went impossibly RIGHT. And they don't want anyone knowing it's possible.</div>
+    <div class="thread-meta">Posted 2023-11-02 // 189 replies</div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">sigma_watcher</div>
+    <div class="thread-body">I've been cross-referencing Bureau monitoring logs with subject debriefs and I've found something that changes everything. There's a PATTERN. Seven days before every confirmed event, the same sequence plays out in the same order. Artifact discovery, pairing reveal, external contact, conduit activation, individual briefing, summons, silence. EVERY EVENT. Same order. Same timing. I've written the whole thing up: <a href="sequence.html" style="color:#4a9eff;">the pre-displacement sequence.</a> If you think you're in one, check the pattern. If the days match, it's real.</div>
+    <div class="thread-meta">Posted 2024-03-22 // 267 replies // <span style="color:var(--accent);">PINNED</span></div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">analog_ghosts</div>
+    <div class="thread-body">I've talked to seven people who claim to be former subjects. ALL SEVEN said the same thing: the groups that prepared &mdash; really prepared, identity research, full costume, era immersion, the whole thing &mdash; had clean extractions. The groups that treated it like a party had complications. Every single time. I've written up everything I know. If you've been selected, or think you might be, <a href="preparation.html" style="color:#4a9eff;">read this before the event.</a> I'm not kidding. Your preparation is the difference between displacement and disaster.</div>
+    <div class="thread-meta">Posted 2024-02-09 // 312 replies // <span style="color:var(--accent);">PINNED</span></div>
+  </div>
+
+  <div class="thread">
+    <div class="thread-user">temporal_drift_99</div>
+    <div class="thread-body">Who is D.R.? Handwritten notes all over the archive. Not Bureau personnel. Not a known subject. Whoever they are, they have FEELINGS about these events. Every annotation is emotional. "She never knows." "The animals react. Every time." "They don't cause them. They just decide who gets to come back." This isn't clinical analysis. This is someone who's lived it.</div>
+    <div class="thread-meta">Posted 2024-01-15 // 94 replies</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 9: WHO IS D.R.? -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section blue" data-classification="UNKNOWN">
+  <h2>THE D.R. QUESTION</h2>
+  <div class="file-ref">FILE: NONE // STATUS: UNVERIFIED // ORIGIN: COMMUNITY ANALYSIS</div>
+
+  <p>Handwritten annotations attributed to "D.R." appear throughout this archive. The Bureau has no record of an analyst with these initials assigned to any node. The handwriting analysis (conducted by external researchers, not the Bureau) suggests a single consistent author writing over a period of years.</p>
+
+  <p>Prevailing theories:</p>
+
+  <details>
+    <summary>[EXPAND] Theory 1: D.R. is a Bureau insider operating under alias</summary>
+    <p style="margin-top:10px;">The most conservative theory. D.R. is a current or former Bureau employee who annotated the archive before or during the leak as a form of whistleblowing. The emotional tone would be unusual for a Bureau analyst but not unprecedented &mdash; long-term exposure to displacement events is known to affect personnel psychologically. Several Bureau employees have been discharged for "over-identification with subjects."</p>
+  </details>
+
+  <details>
+    <summary>[EXPAND] Theory 2: D.R. is a former displacement subject</summary>
+    <p style="margin-top:10px;">The annotations demonstrate intimate knowledge of what displacement <em>feels</em> like &mdash; not just the mechanics, but the emotions. The disorientation. The attachment. The terror. This reads as firsthand experience. The Bureau has occasionally recruited former subjects as consultants. D.R. may be one of them, annotating the archive with the authority of having <em>been there</em>.</p>
+  </details>
+
+  <details>
+    <summary>[EXPAND] Theory 3: D.R. exists in a different time period than the archive</summary>
+    <p style="margin-top:10px;">Some researchers have noted that D.R.'s annotations occasionally reference events that had not yet occurred at the time the archive was leaked. If this observation is accurate (and it's contested), D.R. may be writing from a different temporal position &mdash; annotating documents in a time they were never physically present for. This creates a paradox that makes Bureau logic analysts uncomfortable.</p>
+  </details>
+
+  <details>
+    <summary>[EXPAND] Theory 4: D.R. is not a person</summary>
+    <p style="margin-top:10px;">The most speculative theory, originally posted as a joke on a conspiracy forum and then taken increasingly seriously. What if D.R. is not a human being? What if the annotations come from the temporal field itself, or from a conduit, or from an Anchor operating in a state of temporal awareness that the Bureau didn't know was possible? The initials could be a label, not a name. "D.R." could stand for <span class="redacted">████████████</span>, <span class="redacted">████████ ████████</span>, or simply a designation the field uses for itself.</p>
+    <p style="margin-top:10px;">One forum user pointed out that the annotation most frequently attributed to D.R. &mdash; "the anchor holds" &mdash; is the same phrase encoded on every artifact. Make of that what you will.</p>
+  </details>
+
+  <p class="handwritten blue">You're overthinking it. I'm just someone who was paying attention. &mdash; D.R.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 10: CLASSIFIED FRAGMENTS -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section warn" data-classification="FRAGMENTS">
+  <h2>UNRECOVERABLE FILE FRAGMENTS</h2>
+  <div class="file-ref">FILE: VARIOUS // STATUS: CORRUPTED // RECOVERY: PARTIAL</div>
+
+  <p style="color:#555;">The following text fragments were recovered from corrupted database sectors. They cannot be attributed to specific files or placed in chronological order. They are presented as-is.</p>
+
+  <div class="ascii-box">
+...the conduit exhibited behavior consistent
+with pre-cognitive awareness of the threat.
+Bureau models do not account for this. The
+conduit was not merely responding to stimuli.
+It was ANTICIPATING...
+  </div>
+
+  <div class="ascii-box">
+...extraction protocol CHARLIE requires a
+minimum of ██ subjects maintaining character
+integrity at the moment of extraction. If
+fewer than ██ subjects are convincingly
+displaced, the field cannot generate sufficient
+coherence for safe return. This is not a game.
+Becoming the other person is a survival
+requirement...
+  </div>
+
+  <div class="ascii-box" style="border-color:#333;">
+...seventeen objects recovered from the
+displacement zone exhibited temporal residue.
+Of these, four were determined to be
+"temporally active" — capable of interacting
+with the displacement field in ways that
+standard physics cannot explain. Bureau
+policy: all temporally active objects are to
+be catalogued, sealed, and stored in Node
+██████ under Level-██ protocols. Under no
+circumstances should temporally active objects
+be removed from Bureau custody by subjects
+or unauthorized...
+  </div>
+
+  <div class="ascii-box">
+...the ritual component remains unexplained.
+Subject S4 in Event TDA-████-████ arranged
+candles and herbs in a pattern that produced
+a measurable 14% fluctuation in the
+displacement field. When asked afterward, S4
+stated they "just felt like it was right."
+Bureau physics cannot account for this.
+Bureau parapsychology has requested additional
+funding. Request denied...
+  </div>
+
+  <div class="ascii-box">
+...CRITICAL: do not assume the Anchor is
+passive. In Event TDA-████-████, the Anchor
+appeared to unconsciously DIRECT the
+displacement field during a crisis, stabilizing
+subjects who were drifting. The Anchor was
+not aware of this action. When debriefed, the
+Anchor described feeling "heavy, like gravity
+was pulling through me" at the exact moment
+field stabilization was recorded...
+  </div>
+
+  <div class="ascii-box" style="color:var(--accent); border-color:var(--accent);">
+...I don't know who reads these reports anymore.
+I don't know if the Bureau even knows what it's
+protecting. But I know this: the next time an
+artifact surfaces, the next time something in
+the room reacts to a sound you can't hear, the
+next time a group of people finds their names on
+a tape they didn't make — it's real. All of it.
+
+The conduit matters more than the Bureau
+will ever admit.
+
+— D.R.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 11: GLOSSARY -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section" data-classification="REFERENCE" style="border-left-color:#444;">
+  <h2 style="color:#888;">BUREAU TERMINOLOGY GLOSSARY</h2>
+  <div class="file-ref">FILE: BTA-REF-GLOSSARY // STATUS: UNCLASSIFIED</div>
+
+  <table>
+    <tr><th>TERM</th><th>DEFINITION</th></tr>
+    <tr><td><strong>Anchor</strong></td><td>The fixed-point individual in a displacement event. Does not actually displace. Does not know their role. Holds the field stable.</td></tr>
+    <tr><td><strong>Artifact</strong></td><td>A physical object (usually magnetic tape) encoded with temporal frequency data. Initiates displacement when activated.</td></tr>
+    <tr><td><strong>Bridge</strong></td><td>The temporal connection between time periods. Maintained by the conduit. Collapses if conduit is compromised.</td></tr>
+    <tr><td><strong>Conduit</strong></td><td>The biological anchor point for a temporal bridge. Nature disputed &mdash; see Animal Theory. Bureau definition: "any sufficiently resonant biological system within the displacement zone."</td></tr>
+    <tr><td><strong>CPU</strong></td><td>Conduit Protection Unit. Bureau division responsible for conduit safety.</td></tr>
+    <tr><td><strong>Displacement</strong></td><td>The transfer of consciousness from one temporal position to another, via paired subjects.</td></tr>
+    <tr><td><strong>Displacement Zone</strong></td><td>The physical area around the artifact within which displacement occurs. Typically <span class="redacted">███</span> meter radius.</td></tr>
+    <tr><td><strong>Ego Death</strong></td><td>Permanent dissolution of identity caused by sustained temporal drift without an Anchor.</td></tr>
+    <tr><td><strong>Extraction</strong></td><td>The process of returning displaced subjects to their original temporal positions. Requires active bridge and stable Anchor.</td></tr>
+    <tr><td><strong>Frequency Window</strong></td><td>A period when the temporal membrane is thinner than normal, increasing displacement likelihood. 1980-1995 is the largest documented window.</td></tr>
+    <tr><td><strong>Node</strong></td><td>A regional Bureau office designated by Greek letter. Sigma covers the eastern US.</td></tr>
+    <tr><td><strong>Pairing</strong></td><td>The artifact-encoded assignment of which subjects swap consciousness. Cannot be altered post-activation.</td></tr>
+    <tr><td><strong>Snap-back</strong></td><td>Forced return to original temporal position caused by partial bridge collapse. Painful. May cause temporary amnesia.</td></tr>
+    <tr><td><strong>Stray</strong></td><td>A non-subject who enters the displacement zone during an active event.</td></tr>
+    <tr><td><strong>Temporal Drift</strong></td><td>Gradual dissolution of identity boundaries when the Anchor is destabilized. Fatal if sustained.</td></tr>
+    <tr><td><strong>Temporal Membrane</strong></td><td>The boundary between time periods. Varies in thickness. Thinnest during Frequency Windows.</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 12: FINAL NOTE -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="doc-section" data-classification="NONE" style="border-left-color:#222; background:transparent;">
+
+  <div class="ascii-box" style="color:var(--accent); border-color:#333; text-align:center;">
+This archive is incomplete.
+
+The Bureau knows it's here. They haven't removed it.
+
+Either they can't, or they don't want to.
+
+If you found this because something strange is
+happening to you — because someone found a tape,
+or your names are on a list, or something in
+the room won't stop staring at the static —
+
+Then it's already in motion.
+
+You can't stop it. You shouldn't try.
+The field chose you. All of you. For a reason.
+
+Become the person you're meant to become.
+The field doesn't tolerate pretending.
+It requires becoming.
+
+The anchor holds. It always holds.
+
+See you on the other side.
+
+&mdash; D.R.
+
+ANCORA TENET.
+  </div>
+</div>
+
+<div class="waveform" style="text-align:center; margin: 30px 0;">
+∿∿∿ END OF RECOVERED ARCHIVE ∿∿∿ NODE SIGMA ∿∿∿ FILE INTEGRITY: 73.2% ∿∿∿ NEXT SCHEDULED DISPLACEMENT: <span class="redacted">████████████</span> ∿∿∿
+</div>
+
+<div class="site-footer">
+  <img src="seal.svg" alt="" style="width:60px; height:60px; margin:0 auto 10px; display:block; opacity:0.3;">
+  <p>BUREAU OF TEMPORAL AFFAIRS // DEPARTMENT OF CHRONOLOGICAL INTEGRITY</p>
+  <p style="margin-top:5px;">PROTECTOR FIDELIS FREQUENTIAM MUTAT // ANCORA TENET</p>
+  <p style="margin-top:15px; color:#1a1a28;">There is no source code. There is only the archive.</p>
+</div>
+
+</div>
+
+<!-- Nothing to see here. The Bureau appreciates your curiosity. -->
+
+</body>
+</html>
