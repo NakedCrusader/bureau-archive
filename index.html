@@ -127,6 +127,8 @@
     cursor: default;
     user-select: none;
     transition: all 0.3s;
+    word-break: break-all;
+    overflow-wrap: anywhere;
   }
   .redacted:hover { background: #2a2a3e; color: #2a2a3e; }
 
@@ -346,11 +348,13 @@
   }
 
   @media (max-width: 600px) {
-    .container { padding: 10px; }
-    .doc-section { padding: 15px; }
+    .container { padding: 10px; overflow-x: hidden; }
+    .doc-section { padding: 15px; overflow-x: hidden; }
     .margin-note { float: none; width: 100%; margin: 10px 0; }
     .site-header .title { font-size: 24px; }
     table { font-size: 11px; }
+    h3 { word-break: break-word; overflow-wrap: anywhere; }
+    blockquote { overflow-wrap: anywhere; }
   }
 </style>
 </head>
