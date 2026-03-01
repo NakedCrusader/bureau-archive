@@ -144,11 +144,18 @@
   .stamp.green { border-color: var(--accent2); color: var(--accent2); }
   .stamp.warn { border-color: var(--warn); color: var(--warn); }
 
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 15px 0;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 15px 0;
     font-size: 13px;
+    min-width: 600px;
   }
   th {
     background: #111118;
@@ -503,7 +510,7 @@
 
   <p>Bureau psychologists have identified recurring behavioral archetypes that emerge among displacement subjects. These are not assigned or predicted &mdash; they manifest naturally during the event, often surprising the subjects themselves. The Bureau uses archetype identification to anticipate group dynamics and potential conflicts.</p>
 
-  <table>
+  <div class="table-wrap"><table>
     <tr><th>ARCHETYPE</th><th>DESCRIPTION</th><th>OCCURRENCE</th></tr>
     <tr>
       <td><strong>THE PROTECTOR</strong></td>
@@ -545,7 +552,7 @@
       <td>Recognizes that objects in the displacement zone have value. Driven to acquire and catalog. May prioritize collection over collaboration. Not malicious &mdash; just intensely focused on things rather than people.</td>
       <td>~12% of subjects</td>
     </tr>
-  </table>
+  </table></div>
 
   <p>Bureau protocol requires field agents to identify archetypes within the first hour of a displacement event. The interaction between archetypes is as important as the archetypes themselves. A Protector paired with an Experimenter creates friction. A Nostalgist and an Investigator will pull the group in opposite directions. A Secret Keeper near a Ritualist can produce <span class="redacted">████████████████████</span>.</p>
 
@@ -561,7 +568,7 @@
 
   <p>The following is a partial listing of confirmed temporal displacement events extracted from a corrupted database backup. Most details remain classified or unrecoverable. Events are listed by the Bureau's internal identification system: TDA-[year]-[date]-[node].</p>
 
-  <table>
+  <div class="table-wrap"><table>
     <tr><th>EVENT ID</th><th>YEAR</th><th>LOCATION</th><th>SUBJECTS</th><th>CONDUIT (UNVERIFIED)</th><th>OUTCOME</th></tr>
     <tr><td>TDA-1952-0312-ALPHA</td><td>1952</td><td><span class="redacted">████████, England</span></td><td>3</td><td>Siamese cat (present)</td><td>SUCCESSFUL EXTRACTION</td></tr>
     <tr><td>TDA-1958-0701-ALPHA</td><td>1958</td><td><span class="redacted">██████, France</span></td><td>4</td><td><em>Music box (disputed)</em></td><td>SUCCESSFUL EXTRACTION*</td></tr>
@@ -573,7 +580,7 @@
     <tr><td style="color:var(--accent);">TDA-1986-0301-SIGMA</td><td style="color:var(--accent);">1986</td><td style="color:var(--accent);"><span class="redacted">████████████████</span></td><td style="color:var(--accent);">9</td><td style="color:var(--accent);"><span class="redacted">████████████</span></td><td style="color:var(--accent);">EXTRACTION CONFIRMED &mdash; <em>FILE SEALED BY DIRECTOR ORDER</em></td></tr>
     <tr><td>TDA-1991-<span class="redacted">████</span>-<span class="redacted">██</span></td><td>1991</td><td><span class="redacted">████████████████████</span></td><td><span class="redacted">██</span></td><td><span class="redacted">████████████</span></td><td><span class="redacted">████████████████████████████</span></td></tr>
     <tr><td>TDA-1994-0214-DELTA</td><td>1994</td><td><span class="redacted">████████, OR</span></td><td>5</td><td>Orange tabby</td><td>SUCCESSFUL EXTRACTION</td></tr>
-  </table>
+  </table></div>
 
   <p style="font-size:12px; color:#555;">*The 1958 France event is disputed because the artifact was a music box rather than magnetic tape, and the "conduit" was apparently the box itself. Some Bureau analysts classify this as a different phenomenon entirely. Others argue it proves the animal-conduit theory is wrong, or at minimum incomplete. Note that the "conduit" column in this registry is labeled UNVERIFIED &mdash; it may record what was <em>present</em> in the displacement zone, not what was definitively identified as the conduit.</p>
 
@@ -840,7 +847,7 @@ will ever admit.
   <h2 style="color:#888;">BUREAU TERMINOLOGY GLOSSARY</h2>
   <div class="file-ref">FILE: BTA-REF-GLOSSARY // STATUS: UNCLASSIFIED</div>
 
-  <table>
+  <div class="table-wrap"><table>
     <tr><th>TERM</th><th>DEFINITION</th></tr>
     <tr><td><strong>Anchor</strong></td><td>The fixed-point individual in a displacement event. Does not actually displace. Does not know their role. Holds the field stable.</td></tr>
     <tr><td><strong>Artifact</strong></td><td>A physical object (usually magnetic tape) encoded with temporal frequency data. Initiates displacement when activated.</td></tr>
@@ -858,7 +865,7 @@ will ever admit.
     <tr><td><strong>Stray</strong></td><td>A non-subject who enters the displacement zone during an active event.</td></tr>
     <tr><td><strong>Temporal Drift</strong></td><td>Gradual dissolution of identity boundaries when the Anchor is destabilized. Fatal if sustained.</td></tr>
     <tr><td><strong>Temporal Membrane</strong></td><td>The boundary between time periods. Varies in thickness. Thinnest during Frequency Windows.</td></tr>
-  </table>
+  </table></div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
