@@ -349,7 +349,14 @@
 
   @media (max-width: 600px) {
     .container { padding: 10px; overflow-x: hidden; }
-    .doc-section { padding: 15px; overflow-x: hidden; }
+    .doc-section { padding: 15px 12px; overflow-x: hidden; }
+    .doc-section::before {
+      position: static;
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
     .margin-note { float: none; width: 100%; margin: 10px 0; }
     .site-header .title { font-size: 24px; }
     table { font-size: 11px; }
